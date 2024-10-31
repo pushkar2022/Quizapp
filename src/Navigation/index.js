@@ -6,6 +6,7 @@ import { Screen1,Screen2,Screen3,Screen4,Screen5,Screen6,Screen7,Screen8 } from 
 import { SignScreen1,SignScreen2,SignScreen3,SignScreen4 } from '../Screen/SignIn';
 import TabNavigation from './TabNavigation';
 import Setting from '../Screen/MyProfile/Setting';
+import DetailsCourse from '../Screen/Home/DetailsCourse';
 const Stack=createNativeStackNavigator()
 
 
@@ -27,7 +28,7 @@ const Index = () => {
     <Stack.Screen name="SignScreen4" component={SignScreen4} />
     <Stack.Screen name="Home" component={TabNavigation} />
     <Stack.Screen name="Setting" component={Setting}/>
-   
+   <Stack.Screen name="DetailsCourse" component={DetailsCourse}/>
 
 
     

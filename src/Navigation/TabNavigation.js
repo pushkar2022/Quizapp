@@ -19,13 +19,11 @@ const TabNavigation = () => {
               if (route.name === 'Home') {
                 iconName = focused ? 'home' : 'home';
               } else if (route.name === 'Library') {
-                iconName = focused ? 'bars' : 'bars';
+                iconName = focused ? 'book' : 'book';
               } else if (route.name === 'Join') {
-                iconName = focused ? 'pluscircle' : 'pluscircleo';
+                iconName = focused ? 'heart' : 'heart';
               }
-              else if (route.name === 'Create') {
-                  iconName = focused ? 'plus' : 'plus';
-                }
+             
                 else if (route.name === 'Profile') {
                   iconName = focused ? 'user' : 'user';
                 }
@@ -39,13 +37,14 @@ const TabNavigation = () => {
               paddingBottom: 10,
             },
             headerShown: false,
+            tabBarShowLabel: false,
           })}
      
       >
        <Tab.Screen name="Home" component={Home} />
        <Tab.Screen name="Library" component={Home} />
        <Tab.Screen name="Join" component={Home} />
-       <Tab.Screen name="Create" component={Home} />
+       
        <Tab.Screen name="Profile" component={Profile} />
 
         {/* <Tab.Screen name="Settings" component={SettingsScreen} />

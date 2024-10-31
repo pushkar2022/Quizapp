@@ -1,145 +1,103 @@
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Global from '../../Style/Global'
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import GreenButtion from '../Components/Buttion/GreenButtion';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Headers=()=>{
   return(
     <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
       <View style={{flexDirection:'row',gap:10}}>
-        <Text style={{fontWeight:'800',fontSize:18}}>Q</Text>
-        <Text style={{fontWeight:'800',fontSize:18}}>Quizzo</Text>
+       <Image
+        style={{width:50,height:50,borderRadius:25}}
+        source={require('../../Assest/profile.png')}
+       />
+       <View style={{gap:5}}>
+        <Text style={{color:'#32073F',fontSize:12,fontWeight:'600'}}> Rumi Aktar</Text>
+        <Text style={{color:'#382C3C',fontSize:10,}}>Let’s learn something new</Text>
+
+
+       </View>
 
       </View>
       <View style={{flexDirection:'row',gap:10}}>
-      <Icon   name="search1" size={25}/>
+        <View style={{backgroundColor:'#32073F',borderRadius:50,padding:10}}>
 
-<MaterialIcons name="notifications-none" size={25}/>
-
+<MaterialIcons name="notifications-none" size={25} color='#fff'/>
+</View>
       </View>
       
     </View>
   )
 }
 const Home = () => {
+  const navigation=useNavigation()
+  let data=[{id:1,name:'JavaScript',amt:5000,img:''},{id:2,name:'React',amt:5000,img:''},{id:3,name:'Ui Ux',amt:5000,img:''},{id:4,name:'Node js',amt:5000,img:''},{id:6,name:'Python',amt:5000,img:''},{id:7,name:'Flutter',amt:5000,img:''},{id:8,name:'Php',amt:5000,img:''},{id:9,name:'C++',amt:5000,img:''}]
   return (
 
     <View style={Global.container}>
       <ScrollView>
      {Headers()}
-     <View style={{marginTop:25}}/>
-
-      <View style={styles.card}>
-        <Text
-        style={{fontWeight:'500',fontSize:18,color:'white',width:200}}
-        >Play quiz together with your firends now!</Text>
-        <View style={{width:130,marginTop:18}}>
-<TouchableOpacity style={{backgroundColor:'white',borderRadius:24,height:30,justifyContent:'center',alignItems:'center'}} onPress={()=>{}}>
-      <Text style={{textAlign:'center',color:'#6B54DD',fontWeight:'600'}}>Find Friends</Text>
-   </TouchableOpacity>
-</View>
-      </View>
+     <View style={{marginTop:16}}/>
+     <View style={styles.searchBar}>
+      <Icon name="search1" size={20} color="#A199C7FF" style={{marginLeft:10,width:20,marginTop:10}} />
+      <TextInput 
+      style={{ fontSize:18,justifyContent:'center'}}
       
-      <View style={{marginTop:25}}/>
-
-      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
-  
-        <Text style={{fontSize:20,fontWeight:'500'}}>DisCover</Text>
-       
-        <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
-          <Text>View All</Text>
-           <Icon   name="arrowright" size={25}/>
-
-
-        </View>
-      </View>
-      <View style={{marginTop:25}}/>
-      <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      c
-      data={[1,2,3,4,5]}
-      renderItem={({item,index})=>{
-
-        return(<View  style={styles.showCart}>
-          <View style={{height:100,backgroundColor:'green',width:'100%',borderTopLeftRadius:15,borderTopRightRadius:15}}>
-
-          </View>
-         
-
-          </View>
-          )
-
-      }}
       />
-   <View style={{marginTop:25}}/>
 
-<View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
+     </View>
+     <View style={{marginTop:16}}/>
 
-  <Text style={{fontSize:20,fontWeight:'500'}}>Top Authors</Text>
+<View style={{flexWrap:'wrap',flexDirection:'row',gap:16,justifyContent:'center',alignItems:'center'}}>
  
-  <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
-    <Text>View All</Text>
-     <Icon   name="arrowright" size={25}/>
+{[1,2,3,4,5,6]?.map((item)=>{
 
+    return(
+      <View style={{width:40,height:40,borderRadius:50,backgroundColor:'#32073F',marginHorizontal:25}}>
 
-  </View>
-</View>
-<View style={{marginTop:25}}/>
-<FlatList
-horizontal
-showsHorizontalScrollIndicator={false}
-c
-data={[1,2,3,4,5]}
-renderItem={({item,index})=>{
-
-  return(<View  style={styles.showCart}>
-    <View style={{height:100,backgroundColor:'green',width:'100%',borderTopLeftRadius:15,borderTopRightRadius:15}}>
-
-    </View>
-   
-
-    </View>
+      </View>
     )
 
-}}
-/>
+})}
+    
 
-<View style={{marginTop:25}}/>
-
-<View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
-
-  <Text style={{fontSize:20,fontWeight:'500'}}>Top Collections</Text>
  
-  <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
-    <Text>View All</Text>
-     <Icon   name="arrowright" size={25}/>
+  
+ 
 
-
-  </View>
 </View>
-<View style={{marginTop:25}}/>
+<View style={{marginTop:16}}/>
+<Text style={{fontSize:14,fontWeight:600}}>Popular Courses</Text>
+
+<View style={{marginTop:16}}/>
+
+
 <FlatList
-horizontal
-showsHorizontalScrollIndicator={false}
-c
-data={[1,2,3,4,5]}
+numColumns={2}
+data={data}
 renderItem={({item,index})=>{
+  return(
+    <TouchableOpacity onPress={()=>navigation.navigate('DetailsCourse',{item:item})} style={{width:'45%',borderRadius:5,backgroundColor:'#32073F',height:120,margin:5,elevation:5}}>
+    <View style={{backgroundColor:'#fff',width:'100%',height:95,justifyContent:'center',}}>
+      <View style={{flexDirection:'row',alignItems:'center',gap:10,marginLeft:15}}>
+        <View style={{width:64,height:51,backgroundColor:'#32073F',borderRadius:5}}/>
 
-  return(<View  style={styles.showCart}>
-    <View style={{height:100,backgroundColor:'green',width:'100%',borderTopLeftRadius:15,borderTopRightRadius:15}}>
-
+    <Text style={{fontSize:16,fontWeight:'600'}}>{item?.name}</Text>
     </View>
-   
-
     </View>
-    )
-
+    <Text style={{color:'#fff',textAlign:'center'}}>$ {item?.amt}</Text>
+    </TouchableOpacity>
+  )
 }}
+
+
 />
+
+   
 
 
 </ScrollView>
@@ -150,6 +108,19 @@ renderItem={({item,index})=>{
 export default Home
 
 const styles = StyleSheet.create({
+  searchBar:{
+    height:40,
+    width:'100%',
+    borderRadius:10,
+    borderWidth:1,
+    borderColor:'#382C3C',
+    flexDirection:'row',
+    // padding:0,
+    // backgroundColor:'green',
+    // justifyContent:'center',
+    // alignItems:'center',
+
+  },
   card:{
     width:'100%',
     // height:100,
