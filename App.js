@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import firebase from '@react-native-firebase/app';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Navigation from './src/Navigation'
 const App = () => {

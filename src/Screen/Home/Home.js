@@ -1,10 +1,12 @@
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Global from '../../Style/Global'
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import GreenButtion from '../Components/Buttion/GreenButtion';
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 
 const Headers=()=>{
@@ -35,7 +37,40 @@ const Headers=()=>{
 }
 const Home = () => {
   const navigation=useNavigation()
-  let data=[{id:1,name:'JavaScript',amt:5000,img:''},{id:2,name:'React',amt:5000,img:''},{id:3,name:'Ui Ux',amt:5000,img:''},{id:4,name:'Node js',amt:5000,img:''},{id:6,name:'Python',amt:5000,img:''},{id:7,name:'Flutter',amt:5000,img:''},{id:8,name:'Php',amt:5000,img:''},{id:9,name:'C++',amt:5000,img:''}]
+  let [data,setData]=useState([])
+ // let data=[{id:1,name:'JavaScript',amt:5000,img:''},{id:2,name:'React',amt:5000,img:''},{id:3,name:'Ui Ux',amt:5000,img:''},{id:4,name:'Node js',amt:5000,img:''},{id:6,name:'Python',amt:5000,img:''},{id:7,name:'Flutter',amt:5000,img:''},{id:8,name:'Php',amt:5000,img:''},{id:9,name:'C++',amt:5000,img:''}]
+
+  const getProducts = async () => {
+    const user = auth().currentUser;
+  console.log('Getting products',user)
+    if (!user) {
+      console.log('User not logged in');
+      return;
+    }
+  
+    try {
+      const productsSnapshot = await firestore()
+        .collection('products')
+        .where('userId', '==', user.uid)
+        .orderBy('createdAt', 'desc')
+        .get();
+  
+      const products = productsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+  
+      console.log('Products retrieved:', products);
+      setData(products)
+      
+    } catch (error) {
+      console.error('Error getting products:', error);
+    }
+  };
+  useEffect(()=>{
+    getProducts()
+
+  },[])
   return (
 
     <View style={Global.container}>
@@ -57,9 +92,9 @@ const Home = () => {
 {[1,2,3,4,5,6]?.map((item)=>{
 
     return(
-      <View style={{width:40,height:40,borderRadius:50,backgroundColor:'#32073F',marginHorizontal:25}}>
+      <TouchableOpacity onPress={async()=>await getProducts()} style={{width:40,height:40,borderRadius:50,backgroundColor:'#32073F',marginHorizontal:25}}>
 
-      </View>
+      </TouchableOpacity>
     )
 
 })}
@@ -80,16 +115,24 @@ const Home = () => {
 numColumns={2}
 data={data}
 renderItem={({item,index})=>{
+  console.log('item?.imagesitem?.images',item?.images?.[0],item?.name)
   return(
     <TouchableOpacity onPress={()=>navigation.navigate('DetailsCourse',{item:item})} style={{width:'45%',borderRadius:5,backgroundColor:'#32073F',height:120,margin:5,elevation:5}}>
     <View style={{backgroundColor:'#fff',width:'100%',height:95,justifyContent:'center',}}>
       <View style={{flexDirection:'row',alignItems:'center',gap:10,marginLeft:15}}>
-        <View style={{width:64,height:51,backgroundColor:'#32073F',borderRadius:5}}/>
+        {/* <View style={{width:64,height:51,backgroundColor:'#32073F',borderRadius:5}}> */}
+          <Image
+          // style={{width:100,height:100,}}
+          style={{width:64,height:51,backgroundColor:'#32073F',borderRadius:5}}
+          source={{uri:item?.images?.[0]}}
+          />
+
+          {/* </View> */}
 
     <Text style={{fontSize:16,fontWeight:'600'}}>{item?.name}</Text>
     </View>
     </View>
-    <Text style={{color:'#fff',textAlign:'center'}}>$ {item?.amt}</Text>
+    <Text style={{color:'#fff',textAlign:'center'}}>$ {item?.price}</Text>
     </TouchableOpacity>
   )
 }}

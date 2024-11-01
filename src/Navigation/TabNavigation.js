@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../Screen/Home/Home'
 import Profile from '../Screen/MyProfile/Profile';
+import AddCourse from '../Screen/Home/AddCourse';
 
 const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
@@ -43,7 +44,7 @@ const TabNavigation = () => {
       >
        <Tab.Screen name="Home" component={Home} />
        <Tab.Screen name="Library" component={Home} />
-       <Tab.Screen name="Join" component={Home} />
+       <Tab.Screen name="Join" component={AddCourse} />
        
        <Tab.Screen name="Profile" component={Profile} />
 

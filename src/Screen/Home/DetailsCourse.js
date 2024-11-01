@@ -3,6 +3,7 @@ import React from 'react'
 import Global from '../../Style/Global'
 import Icon from'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native'
+import Video from 'react-native-video';
 const Headers=(navigation,name)=>{
       return(
             <View style={{flexDirection:'row',gap:100,alignItems:'center'}}>
@@ -16,16 +17,24 @@ const Headers=(navigation,name)=>{
 
 const DetailsCourse = ({route}) => {
       const navigation =useNavigation()
-      const {name}=route?.params?.item||{}
+      console.log('route?.params?.itemroute?.params?.item',route?.params?.item)
+      const {name,video,price,description}=route?.params?.item||{}
       let data=[{id:1,name:'Introduction to Html'},{id:2,name:'Introduction to Html'},{id:3,name:'Introduction to Html'},{id:4,name:'Introduction to Html'},{id:5,name:'Introduction to Html'}]
       
   return (
     <View style={Global.container}>
       {Headers(navigation,name)}
       <View style={{marginTop:20}}/>
-      <View style={styles.cart}>
+      {/* <View style={styles.cart}> */}
+      <Video
+        source={{ uri: video?video:'https://perksevent.s3.us-east-1.amazonaws.com/WhatsApp+Video+2024-11-01+at+1.09.38+PM.mp4' }} // URL of the video
+        style={styles.video}
+        controls={true} // Show playback controls
+        resizeMode="contain" // Adjust video size to the container
+        onError={(e) => console.log('Error playing video:', e)} // Error handling
+      />
 
-      </View>
+      {/* </View>  */}
       <View style={{marginTop:20}}/>
       <Text style={{textAlign:'center',fontSize:16,fontWeight:'700',color:'#32073F'}}>{name}</Text>
       <View style={{marginTop:15}}/>
@@ -112,5 +121,9 @@ const styles = StyleSheet.create({
              gap:10,
             
         
+          },
+          video: {
+            width: '100%',
+            height: 300,
           },
 })

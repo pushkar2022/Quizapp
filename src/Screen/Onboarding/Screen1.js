@@ -2,9 +2,23 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
 import Global from '../../Style/Global'
 import { useNavigation } from '@react-navigation/native'
+import firestore from '@react-native-firebase/firestore';
 
 const Screen1 = () => {
   const navigation=useNavigation()
+
+  const addUser = async () => {
+    console.log('start')
+    try{
+    await firestore().collection('Users').add({
+      name: 'Pushkar',
+      age: 25,
+    });
+  }catch(e){
+    console.log(e)
+  }
+    console.log('Added')
+  };
   // useEffect(()=>{
   //   setTimeout(()=>{
   //     navigation.navigate('Screen2')
@@ -22,7 +36,12 @@ source={require('../../Assest/HomeScreen.png')}
 />
   <Text style={{color:'#E9E9E9',fontSize:22,textAlign:'center',width:258,marginTop:40}}>Grow Your Soft Skill And Be More Creative</Text>
 
-  <TouchableOpacity style={{backgroundColor:'#fff', height:40,width:142,justifyContent:'center',alignItems:'center',borderRadius:5,marginTop:40}} onPress={()=>navigation.navigate('Home')}>
+  <TouchableOpacity style={{backgroundColor:'#fff', height:40,width:142,justifyContent:'center',alignItems:'center',borderRadius:5,marginTop:40}} onPress={()=>{
+    navigation.navigate('Screen7')}}
+    
+  //  addUser()
+  // }}
+    >
     <Text style={{color:'#32073F',textAlign:'center',fontSize:16,fontWeight:'600'}}>Get Started</Text>
   </TouchableOpacity>
 
